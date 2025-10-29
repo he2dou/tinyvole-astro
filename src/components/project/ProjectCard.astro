@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "@/components/FormattedDate.astro";
+
+type Props = {
+  project: CollectionEntry<"project">;
+};
+
+const { project } = Astro.props as Props;
+---
+
+<article class="grid gap-1 sm:grid-cols-[auto_1fr]">
+  {project.data.publishDate && (
+    <FormattedDate
+      class="min-w-30 font-semibold text-gray-600 dark:text-gray-400"
+      date={project.data.publishDate}
+    />
+  )}
+  <div>
+    <a class="cactus-link" href={`/projects/${project.id}/`}>
+      {project.data.title}
+    </a>
+    <p class="line-clamp-3 text-sm mt-1">{project.data.description}</p>
+    <div class="mt-1 text-sm space-x-3">
+      {project.data.url && (
+        <a class="underline underline-offset-2" href={project.data.url} target="_blank" rel="noopener noreferrer">
+          Visit
+        </a>
+      )}
+      {project.data.repo && (
+        <a class="underline underline-offset-2" href={project.data.repo} target="_blank" rel="noopener noreferrer">
+          Source
+        </a>
+      )}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from "astro:content";
+import PageLayout from "@/layouts/Base.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("project");
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<PageLayout meta={{ title: project.data.title, description: project.data.description }}>
+  <article class="prose prose-cactus max-w-none">
+    <h1 class="title mb-2">{project.data.title}</h1>
+    {project.data.publishDate && (
+      <FormattedDate class="text-gray-600 dark:text-gray-400" date={project.data.publishDate} />
+    )}
+    <p class="mb-4">{project.data.description}</p>
+    <div class="not-prose mb-6 space-x-3">
+      {project.data.url && (
+        <a class="cactus-link" href={project.data.url} target="_blank" rel="noopener noreferrer">Visit</a>
+      )}
+      {project.data.repo && (
+        <a class="cactus-link" href={project.data.repo} target="_blank" rel="noopener noreferrer">Source</a>
+      )}
+    </div>
+    <Content />
+  </article>
+</PageLayout>

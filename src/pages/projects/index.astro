@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@/layouts/Base.astro";
+import ProjectCard from "@/components/project/ProjectCard.astro";
+
+const allProjects = await getCollection("project");
+const projectsByDate = allProjects.sort(
+  (a, b) => (b.data.publishDate?.getTime() ?? 0) - (a.data.publishDate?.getTime() ?? 0),
+);
+---
+
+<PageLayout meta={{ title: "Projects" }}>
+  <section>
+    <h1 class="title mb-12">Projects</h1>
+    {projectsByDate.length === 0 ? (
+      <p>No projects yet.</p>
+    ) : (
+      <ul class="space-y-4" role="list">
+        {projectsByDate.map((p) => (
+          <li>
+            <ProjectCard project={p} />
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</PageLayout>

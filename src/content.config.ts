@@ -56,4 +56,27 @@ const tag = defineCollection({
 	}),
 });
 
-export const collections = { post, note, tag };
+const project = defineCollection({
+    loader: glob({ base: "./src/content/project", pattern: "**/*.{md,mdx}" }),
+    schema: ({ image }) =>
+        baseSchema.extend({
+            description: z.string(),
+            coverImage: z
+                .object({
+                    alt: z.string(),
+                    src: image(),
+                })
+                .optional(),
+            publishDate: z
+                .string()
+                .or(z.date())
+                .transform((val) => new Date(val))
+                .optional(),
+            tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
+            technologies: z.array(z.string()).default([]),
+            url: z.string().url().optional(),
+            repo: z.string().url().optional(),
+        }),
+});
+
+export const collections = { post, note, tag, project };
