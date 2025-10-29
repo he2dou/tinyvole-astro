@@ -40,10 +40,28 @@ const { Content } = await render(note);
 		}}
 		date={note.data.publishDate}
 	/>
-	<div
-		class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0"
-		class:list={{ "line-clamp-6": isPreview }}
-	>
-		<Content />
-	</div>
+	{!!note.data.tags?.length && isPreview && (
+		<div class="not-prose mt-2 flex flex-wrap gap-2">
+			{note.data.tags.map((tag) => (
+				<span class="bg-global-text/10 text-xs px-2 py-0.5 rounded-md">{tag}</span>
+			))}
+		</div>
+	)}
+	{
+		isPreview ? (
+			note.data.description ? (
+				<p class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0 line-clamp-3">
+					{note.data.description}
+				</p>
+			) : (
+				<div class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0 line-clamp-3">
+					<Content />
+				</div>
+			)
+		) : (
+			<div class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0">
+				<Content />
+			</div>
+		)
+	}
 </article>
