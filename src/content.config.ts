@@ -74,7 +74,6 @@ const project = defineCollection({
                 .transform((val) => new Date(val))
                 .optional(),
             tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
-            technologies: z.array(z.string()).default([]),
             url: z.string().url().optional(),
             repo: z.string().url().optional(),
         }),

@@ -1,9 +1,8 @@
 ---
-title: Portfolio App
+title: Wealth Admin
 description: A simple portfolio application showcasing personal projects.
 publishDate: 2024-07-15
 tags: [Portfolio, Web]
-technologies: [Astro, Tailwind]
 url: https://example.com/portfolio
 repo: https://github.com/example/portfolio-app
 ---
