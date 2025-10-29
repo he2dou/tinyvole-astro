@@ -23,3 +23,8 @@ pnpm-debug.log*
 *.pem
 .cache
 .astro
+
+
+# lock files
+pnpm-lock.yaml
+package-lock.json
