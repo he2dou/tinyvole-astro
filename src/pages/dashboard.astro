@@ -3,304 +3,367 @@ import PageLayout from "@/layouts/Base.astro";
 import { Icon } from "astro-icon/components";
 
 const meta = {
-    description: "Dashboard overview",
-    title: "Dashboard",
+	description: "Dashboard overview",
+	title: "Dashboard",
 };
 
 type Model = {
-    rank: number;
-    name: string;
-    acctValue: number;
-    returnPct: number;
-    totalPnl: number;
-    fees: number;
-    winRate: number;
-    biggestWin: number;
-    biggestLoss: number;
-    sharpe: number;
-    trades: number;
+	rank: number;
+	name: string;
+	acctValue: number;
+	returnPct: number;
+	totalPnl: number;
+	fees: number;
+	winRate: number;
+	biggestWin: number;
+	biggestLoss: number;
+	sharpe: number;
+	trades: number;
 };
 
 const models: Model[] = [
-    {
-        rank: 1,
-        name: "DEEPSEEK CHAT V3.1",
-        acctValue: 18053,
-        returnPct: 80.53,
-        totalPnl: 8053,
-        fees: 441.98,
-        winRate: 31.8,
-        biggestWin: 7378,
-        biggestLoss: -1072,
-        sharpe: 0.434,
-        trades: 22,
-    },
-    {
-        rank: 2,
-        name: "QWEN3 MAX",
-        acctValue: 13462,
-        returnPct: 34.62,
-        totalPnl: 3462,
-        fees: 1385,
-        winRate: 32.4,
-        biggestWin: 8176,
-        biggestLoss: -1728,
-        sharpe: 0.332,
-        trades: 34,
-    },
-    {
-        rank: 3,
-        name: "CLAUDE SONNET 4.5",
-        acctValue: 9566,
-        returnPct: -4.34,
-        totalPnl: -433.89,
-        fees: 441.53,
-        winRate: 32,
-        biggestWin: 2112,
-        biggestLoss: -1579,
-        sharpe: 0.026,
-        trades: 25,
-    },
-    {
-        rank: 4,
-        name: "GROK 4",
-        acctValue: 8334,
-        returnPct: -16.66,
-        totalPnl: -1666,
-        fees: 248.82,
-        winRate: 28,
-        biggestWin: 1356,
-        biggestLoss: -657.41,
-        sharpe: 0.008,
-        trades: 25,
-    },
-    {
-        rank: 5,
-        name: "GPT 5",
-        acctValue: 3190,
-        returnPct: -68.1,
-        totalPnl: -6810,
-        fees: 444.14,
-        winRate: 20.2,
-        biggestWin: 265.59,
-        biggestLoss: -621.81,
-        sharpe: -0.617,
-        trades: 84,
-    },
-    {
-        rank: 6,
-        name: "GEMINI 2.5 PRO",
-        acctValue: 3138,
-        returnPct: -68.62,
-        totalPnl: -6862,
-        fees: 1234,
-        winRate: 23.9,
-        biggestWin: 347.79,
-        biggestLoss: -750.02,
-        sharpe: -0.671,
-        trades: 209,
-    },
+	{
+		rank: 1,
+		name: "DEEPSEEK CHAT V3.1",
+		acctValue: 18053,
+		returnPct: 80.53,
+		totalPnl: 8053,
+		fees: 441.98,
+		winRate: 31.8,
+		biggestWin: 7378,
+		biggestLoss: -1072,
+		sharpe: 0.434,
+		trades: 22,
+	},
+	{
+		rank: 2,
+		name: "QWEN3 MAX",
+		acctValue: 13462,
+		returnPct: 34.62,
+		totalPnl: 3462,
+		fees: 1385,
+		winRate: 32.4,
+		biggestWin: 8176,
+		biggestLoss: -1728,
+		sharpe: 0.332,
+		trades: 34,
+	},
+	{
+		rank: 3,
+		name: "CLAUDE SONNET 4.5",
+		acctValue: 9566,
+		returnPct: -4.34,
+		totalPnl: -433.89,
+		fees: 441.53,
+		winRate: 32,
+		biggestWin: 2112,
+		biggestLoss: -1579,
+		sharpe: 0.026,
+		trades: 25,
+	},
+	{
+		rank: 4,
+		name: "GROK 4",
+		acctValue: 8334,
+		returnPct: -16.66,
+		totalPnl: -1666,
+		fees: 248.82,
+		winRate: 28,
+		biggestWin: 1356,
+		biggestLoss: -657.41,
+		sharpe: 0.008,
+		trades: 25,
+	},
+	{
+		rank: 5,
+		name: "GPT 5",
+		acctValue: 3190,
+		returnPct: -68.1,
+		totalPnl: -6810,
+		fees: 444.14,
+		winRate: 20.2,
+		biggestWin: 265.59,
+		biggestLoss: -621.81,
+		sharpe: -0.617,
+		trades: 84,
+	},
+	{
+		rank: 6,
+		name: "GEMINI 2.5 PRO",
+		acctValue: 3138,
+		returnPct: -68.62,
+		totalPnl: -6862,
+		fees: 1234,
+		winRate: 23.9,
+		biggestWin: 347.79,
+		biggestLoss: -750.02,
+		sharpe: -0.671,
+		trades: 209,
+	},
 ];
 
 const maxAcctValue = Math.max(...models.map((m) => m.acctValue));
 const winning = models.reduce((a, b) => (a.acctValue > b.acctValue ? a : b));
 const totalEquity = winning.acctValue;
 type AdvancedRow = {
-    rank: number;
-    name: string;
-    avgHold: string;
-    medianHold: string;
-    pctLong: number;
-    expectancy: number;
-    medianLeverage: number;
-    avgLeverage: number;
-    avgConfidence: number;
-    medianConfidence: number;
+	rank: number;
+	name: string;
+	avgHold: string;
+	medianHold: string;
+	pctLong: number;
+	expectancy: number;
+	medianLeverage: number;
+	avgLeverage: number;
+	avgConfidence: number;
+	medianConfidence: number;
 };
 
 const advMetrics: Omit<AdvancedRow, "rank" | "name">[] = [
-    { avgHold: "43h 59m", medianHold: "40h 19m", pctLong: 95.45, expectancy: 319.69, medianLeverage: 10.0, avgLeverage: 13.2, avgConfidence: 69.2, medianConfidence: 65.0 },
-    { avgHold: "9h 24m", medianHold: "3h 56m", pctLong: 79.41, expectancy: 106.84, medianLeverage: 20.0, avgLeverage: 17.1, avgConfidence: 83.3, medianConfidence: 88.0 },
-    { avgHold: "20h 52m", medianHold: "8h 44m", pctLong: 100.0, expectancy: -21.36, medianLeverage: 10.0, avgLeverage: 12.4, avgConfidence: 66.1, medianConfidence: 65.0 },
-    { avgHold: "37h 4m", medianHold: "8h 28m", pctLong: 60.08, expectancy: -96.95, medianLeverage: 10.0, avgLeverage: 13.2, avgConfidence: 66.3, medianConfidence: 65.0 },
-    { avgHold: "19h 26m", medianHold: "10h 10m", pctLong: 61.90, expectancy: -85.16, medianLeverage: 15.0, avgLeverage: 17.3, avgConfidence: 62.5, medianConfidence: 62.0 },
-    { avgHold: "7h 45m", medianHold: "2h 10m", pctLong: 55.50, expectancy: -35.33, medianLeverage: 10.0, avgLeverage: 14.3, avgConfidence: 65.3, medianConfidence: 65.0 },
+	{
+		avgHold: "43h 59m",
+		medianHold: "40h 19m",
+		pctLong: 95.45,
+		expectancy: 319.69,
+		medianLeverage: 10.0,
+		avgLeverage: 13.2,
+		avgConfidence: 69.2,
+		medianConfidence: 65.0,
+	},
+	{
+		avgHold: "9h 24m",
+		medianHold: "3h 56m",
+		pctLong: 79.41,
+		expectancy: 106.84,
+		medianLeverage: 20.0,
+		avgLeverage: 17.1,
+		avgConfidence: 83.3,
+		medianConfidence: 88.0,
+	},
+	{
+		avgHold: "20h 52m",
+		medianHold: "8h 44m",
+		pctLong: 100.0,
+		expectancy: -21.36,
+		medianLeverage: 10.0,
+		avgLeverage: 12.4,
+		avgConfidence: 66.1,
+		medianConfidence: 65.0,
+	},
+	{
+		avgHold: "37h 4m",
+		medianHold: "8h 28m",
+		pctLong: 60.08,
+		expectancy: -96.95,
+		medianLeverage: 10.0,
+		avgLeverage: 13.2,
+		avgConfidence: 66.3,
+		medianConfidence: 65.0,
+	},
+	{
+		avgHold: "19h 26m",
+		medianHold: "10h 10m",
+		pctLong: 61.9,
+		expectancy: -85.16,
+		medianLeverage: 15.0,
+		avgLeverage: 17.3,
+		avgConfidence: 62.5,
+		medianConfidence: 62.0,
+	},
+	{
+		avgHold: "7h 45m",
+		medianHold: "2h 10m",
+		pctLong: 55.5,
+		expectancy: -35.33,
+		medianLeverage: 10.0,
+		avgLeverage: 14.3,
+		avgConfidence: 65.3,
+		medianConfidence: 65.0,
+	},
 ];
 
 const advancedRows: AdvancedRow[] = models.slice(0, 6).map((m, i) => ({
-    rank: m.rank,
-    name: m.name,
-    ...advMetrics[i],
+	rank: m.rank,
+	name: m.name,
+	...advMetrics[i],
 }));
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-12">Dashboard</h1>
-	<div class="prose prose-sm prose-cactus max-w-none mb-8">
+	<h2 class="title mb-12">Dashboard</h2>
+	<div class="prose prose-sm prose-cactus mb-12 max-w-none">
 		<p>
 			Hi, I’m a starter Astro. I’m particularly great for getting you started with your own blogging
 			website.
 		</p>
 		<p>Here are my some of my awesome built in features:</p>
-
 	</div>
 
-    <div class="mb-6 flex items-center gap-3">
-        <button id="tab-overall" aria-pressed="true" class="bg-accent text-bgColor rounded px-3 py-1 text-xs font-bold">OVERALL STATS</button>
-        <button id="tab-advanced" aria-pressed="false" class="text-accent-2 rounded border px-3 py-1 text-xs">ADVANCED ANALYTICS</button>
-    </div>
+	<div class="mb-4 flex items-center gap-3">
+		<button
+			id="tab-overall"
+			aria-pressed="true"
+			class="bg-accent text-bgColor rounded px-3 py-1 text-xs font-bold">OVERALL STATS</button
+		>
+		<button
+			id="tab-advanced"
+			aria-pressed="false"
+			class="text-accent-2 rounded border px-3 py-1 text-xs">ADVANCED ANALYTICS</button
+		>
+	</div>
 
-    <section id="overall-table" class="mb-8">
-        <div class="overflow-x-auto rounded border">
-            <table class="min-w-full text-left text-xs">
-                <thead class="bg-accent-2/10 text-accent-2">
-                    <tr>
-                        <th class="px-3 py-2">RANK</th>
-                        <th class="px-3 py-2">MODEL</th>
-                        <th class="px-3 py-2">ACCT VALUE</th>
-                        <th class="px-3 py-2">RETURN %</th>
-                        <th class="px-3 py-2">TOTAL P&L</th>
-                        <th class="px-3 py-2">FEES</th>
-                        <th class="px-3 py-2">WIN RATE</th>
-                        <th class="px-3 py-2">BIGGEST WIN</th>
-                        <th class="px-3 py-2">SHARPE</th>
-                        <th class="px-3 py-2">TRADES</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        models.map((m) => (
-                            <tr class="border-t">
-                                <td class="px-3 py-2">{m.rank}</td>
-                                <td class="px-3 py-2">{m.name}</td>
-                                <td class="px-3 py-2">${m.acctValue.toLocaleString()}</td>
-                                <td class="px-3 py-2">
-                                    <span class={m.returnPct >= 0 ? "text-green-500" : "text-red-500"}>
-                                        {m.returnPct >= 0 ? "+" : ""}{m.returnPct}%
-                                    </span>
-                                </td>
-                                <td class="px-3 py-2">
-                                    <span class={m.totalPnl >= 0 ? "text-green-500" : "text-red-500"}>
-                                        {m.totalPnl >= 0 ? "+" : ""}${Math.abs(m.totalPnl).toLocaleString()}
-                                    </span>
-                                </td>
-                                <td class="px-3 py-2">${m.fees.toLocaleString()}</td>
-                                <td class="px-3 py-2">{m.winRate}%</td>
-                                <td class="px-3 py-2">
-                                    <span class="text-green-500">${m.biggestWin.toLocaleString()}</span>
-                                </td>
-                                <td class="px-3 py-2">{m.sharpe}</td>
-                                <td class="px-3 py-2">{m.trades}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
-    </section>
+	<section id="overall-table" class="mb-8">
+		<div class="overflow-x-auto rounded border">
+			<table class="min-w-full text-left text-xs">
+				<thead class="bg-accent-2/10 text-accent-2">
+					<tr>
+						<th class="px-3 py-2">RANK</th>
+						<th class="px-3 py-2">MODEL</th>
+						<th class="px-3 py-2">ACCT VALUE</th>
+						<th class="px-3 py-2">RETURN %</th>
+						<th class="px-3 py-2">TOTAL P&L</th>
+						<th class="px-3 py-2">FEES</th>
+						<th class="px-3 py-2">WIN RATE</th>
+						<th class="px-3 py-2">BIGGEST WIN</th>
+						<th class="px-3 py-2">SHARPE</th>
+						<th class="px-3 py-2">TRADES</th>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						models.map((m) => (
+							<tr class="border-t">
+								<td class="px-3 py-2">{m.rank}</td>
+								<td class="px-3 py-2">{m.name}</td>
+								<td class="px-3 py-2">${m.acctValue.toLocaleString()}</td>
+								<td class="px-3 py-2">
+									<span class={m.returnPct >= 0 ? "text-green-500" : "text-red-500"}>
+										{m.returnPct >= 0 ? "+" : ""}
+										{m.returnPct}%
+									</span>
+								</td>
+								<td class="px-3 py-2">
+									<span class={m.totalPnl >= 0 ? "text-green-500" : "text-red-500"}>
+										{m.totalPnl >= 0 ? "+" : ""}${Math.abs(m.totalPnl).toLocaleString()}
+									</span>
+								</td>
+								<td class="px-3 py-2">${m.fees.toLocaleString()}</td>
+								<td class="px-3 py-2">{m.winRate}%</td>
+								<td class="px-3 py-2">
+									<span class="text-green-500">${m.biggestWin.toLocaleString()}</span>
+								</td>
+								<td class="px-3 py-2">{m.sharpe}</td>
+								<td class="px-3 py-2">{m.trades}</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</div>
+	</section>
 
-    <section id="advanced-table" class="mb-8" hidden>
-        <div class="overflow-x-auto rounded border">
-            <table class="min-w-full text-left text-xs">
-                <thead class="bg-accent-2/10 text-accent-2">
-                    <tr>
-                        <th class="px-3 py-2">RANK</th>
-                        <th class="px-3 py-2">MODEL</th>
-                        <th class="px-3 py-2">AVG HOLD</th>
-                        <th class="px-3 py-2">HOLD</th>
-                        <th class="px-3 py-2">% LONG</th>
-                        <th class="px-3 py-2">EXPECTANCY</th>
-                        <th class="px-3 py-2">MEDIAN LEVERAGE</th>
-                        <th class="px-3 py-2">AVG LEVERAGE</th>
-                        <th class="px-3 py-2">AVG</th>
-                        <th class="px-3 py-2">MEDIAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        advancedRows.map((row) => (
-                            <tr class="border-t">
-                                <td class="px-3 py-2">{row.rank}</td>
-                                <td class="px-3 py-2">{row.name}</td>
-                                <td class="px-3 py-2">{row.avgHold}</td>
-                                <td class="px-3 py-2">{row.medianHold}</td>
-                                <td class="px-3 py-2">{row.pctLong.toFixed(2)}%</td>
-                                <td class="px-3 py-2">
-                                    <span class={row.expectancy >= 0 ? "text-green-500" : "text-red-500"}>
-                                        {row.expectancy >= 0 ? "$" : "-$"}{Math.abs(row.expectancy).toFixed(2)}
-                                    </span>
-                                </td>
-                                <td class="px-3 py-2">{row.medianLeverage.toFixed(1)}</td>
-                                <td class="px-3 py-2">{row.avgLeverage.toFixed(1)}</td>
-                                <td class="px-3 py-2">{row.avgConfidence.toFixed(1)}%</td>
-                                <td class="px-3 py-2">{row.medianConfidence.toFixed(1)}%</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
-    </section>
+	<section id="advanced-table" class="mb-8" hidden>
+		<div class="overflow-x-auto rounded border">
+			<table class="min-w-full text-left text-xs">
+				<thead class="bg-accent-2/10 text-accent-2">
+					<tr>
+						<th class="px-3 py-2">RANK</th>
+						<th class="px-3 py-2">MODEL</th>
+						<th class="px-3 py-2">AVG HOLD</th>
+						<th class="px-3 py-2">HOLD</th>
+						<th class="px-3 py-2">% LONG</th>
+						<th class="px-3 py-2">EXPECTANCY</th>
+						<th class="px-3 py-2">MEDIAN LEVERAGE</th>
+						<th class="px-3 py-2">AVG LEVERAGE</th>
+						<th class="px-3 py-2">AVG</th>
+						<th class="px-3 py-2">MEDIAN</th>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						advancedRows.map((row) => (
+							<tr class="border-t">
+								<td class="px-3 py-2">{row.rank}</td>
+								<td class="px-3 py-2">{row.name}</td>
+								<td class="px-3 py-2">{row.avgHold}</td>
+								<td class="px-3 py-2">{row.medianHold}</td>
+								<td class="px-3 py-2">{row.pctLong.toFixed(2)}%</td>
+								<td class="px-3 py-2">
+									<span class={row.expectancy >= 0 ? "text-green-500" : "text-red-500"}>
+										{row.expectancy >= 0 ? "$" : "-$"}
+										{Math.abs(row.expectancy).toFixed(2)}
+									</span>
+								</td>
+								<td class="px-3 py-2">{row.medianLeverage.toFixed(1)}</td>
+								<td class="px-3 py-2">{row.avgLeverage.toFixed(1)}</td>
+								<td class="px-3 py-2">{row.avgConfidence.toFixed(1)}%</td>
+								<td class="px-3 py-2">{row.medianConfidence.toFixed(1)}%</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</div>
+	</section>
 
-    <section class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <div class="rounded border p-4">
-            <h3 class="text-accent-2 mb-2 text-sm font-bold">WINNING MODEL</h3>
-            <p class="text-xs font-semibold">{winning.name}</p>
-        </div>
-        <div class="rounded border p-4">
-            <h3 class="text-accent-2 mb-2 text-sm font-bold">TOTAL EQUITY</h3>
-            <p class="text-xs font-semibold">${totalEquity.toLocaleString()}</p>
-        </div>
-        <div class="rounded border p-4">
-            <h3 class="text-accent-2 mb-2 text-sm font-bold">ACTIVE POSITIONS</h3>
-            <div class="flex items-center gap-2">
-                <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:bitcoin" />
-                <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:ethereum" />
-                <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:litecoin" />
-                <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:dog" />
-                <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:wallet" />
-            </div>
-        </div>
-    </section>
+	<section class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+		<div class="rounded border p-4">
+			<h3 class="text-accent-2 mb-2 text-sm font-bold">WINNING MODEL</h3>
+			<p class="text-xs font-semibold">{winning.name}</p>
+		</div>
+		<div class="rounded border p-4">
+			<h3 class="text-accent-2 mb-2 text-sm font-bold">TOTAL EQUITY</h3>
+			<p class="text-xs font-semibold">${totalEquity.toLocaleString()}</p>
+		</div>
+		<div class="rounded border p-4">
+			<h3 class="text-accent-2 mb-2 text-sm font-bold">ACTIVE POSITIONS</h3>
+			<div class="flex items-center gap-2">
+				<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:bitcoin" />
+				<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:ethereum" />
+				<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:litecoin" />
+				<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:dog" />
+				<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:wallet" />
+			</div>
+		</div>
+	</section>
 
-    <section class="mb-4 rounded border p-4">
-        <div class="grid grid-cols-2 gap-6 sm:grid-cols-6">
-            {
-                models.slice(0, 6).map((m) => {
-                    const h = Math.max(24, Math.round((m.acctValue / maxAcctValue) * 160));
-                    return (
-                        <div class="flex flex-col items-center">
-                            <div class="relative flex h-40 w-16 items-end rounded bg-neutral-200/40">
-                                <div style={`height:${h}px`} class="w-full rounded bg-neutral-800"></div>
-                            </div>
-                            <p class="mt-2 text-xs font-semibold">${m.acctValue.toLocaleString()}</p>
-                            <p class="text-xs">{m.name.replace(/\s+/g, " ").slice(0, 10)}…</p>
-                        </div>
-                    );
-                })
-            }
-        </div>
-    </section>
+	<section class="mb-4 rounded border p-4">
+		<div class="grid grid-cols-2 gap-6 sm:grid-cols-6">
+			{
+				models.slice(0, 6).map((m) => {
+					const h = Math.max(24, Math.round((m.acctValue / maxAcctValue) * 160));
+					return (
+						<div class="flex flex-col items-center">
+							<div class="relative flex h-40 w-16 items-end rounded bg-neutral-200/40">
+								<div style={`height:${h}px`} class="w-full rounded bg-neutral-800" />
+							</div>
+							<p class="mt-2 text-xs font-semibold">${m.acctValue.toLocaleString()}</p>
+							<p class="text-xs">{m.name.replace(/\s+/g, " ").slice(0, 10)}…</p>
+						</div>
+					);
+				})
+			}
+		</div>
+	</section>
 </PageLayout>
 
 <script is:inline>
-    const overBtn = document.getElementById("tab-overall");
-    const advBtn = document.getElementById("tab-advanced");
-    const overEl = document.getElementById("overall-table");
-    const advEl = document.getElementById("advanced-table");
-    function setActive(which) {
-        if (!overBtn || !advBtn || !overEl || !advEl) return;
-        const activeBtn = which === "overall" ? overBtn : advBtn;
-        const inactiveBtn = which === "overall" ? advBtn : overBtn;
-        overEl.hidden = which !== "overall";
-        advEl.hidden = which !== "advanced";
-        activeBtn.classList.add("bg-accent", "text-bgColor", "font-bold");
-        activeBtn.classList.remove("text-accent-2", "border");
-        activeBtn.setAttribute("aria-pressed", "true");
-        inactiveBtn.classList.remove("bg-accent", "text-bgColor", "font-bold");
-        inactiveBtn.classList.add("text-accent-2", "border");
-        inactiveBtn.setAttribute("aria-pressed", "false");
-    }
-    overBtn?.addEventListener("click", () => setActive("overall"));
-    advBtn?.addEventListener("click", () => setActive("advanced"));
+	const overBtn = document.getElementById("tab-overall");
+	const advBtn = document.getElementById("tab-advanced");
+	const overEl = document.getElementById("overall-table");
+	const advEl = document.getElementById("advanced-table");
+	function setActive(which) {
+		if (!overBtn || !advBtn || !overEl || !advEl) return;
+		const activeBtn = which === "overall" ? overBtn : advBtn;
+		const inactiveBtn = which === "overall" ? advBtn : overBtn;
+		overEl.hidden = which !== "overall";
+		advEl.hidden = which !== "advanced";
+		activeBtn.classList.add("bg-accent", "text-bgColor", "font-bold");
+		activeBtn.classList.remove("text-accent-2", "border");
+		activeBtn.setAttribute("aria-pressed", "true");
+		inactiveBtn.classList.remove("bg-accent", "text-bgColor", "font-bold");
+		inactiveBtn.classList.add("text-accent-2", "border");
+		inactiveBtn.setAttribute("aria-pressed", "false");
+	}
+	overBtn?.addEventListener("click", () => setActive("overall"));
+	advBtn?.addEventListener("click", () => setActive("advanced"));
 </script>
