@@ -99,8 +99,8 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 		</div>
 		{
 			!!uniqueTags.length && (
-				<aside>
-					<h2 class="title mb-4 flex items-center gap-2 text-lg">
+				<aside class="not-prose">
+					<h3 class="title mb-4 flex items-center gap-2 text-lg">
 						Tags
 						<svg
 							aria-hidden="true"
@@ -118,24 +118,23 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 							<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 							<path d="M6 9h-.01" />
 						</svg>
-					</h2>
-					<ul class="flex flex-wrap gap-2">
+					</h3>
+					<ul class="space-y-2" role="list">
 						{uniqueTags.map((tag) => (
 							<li>
-								<a class="cactus-link flex items-center justify-center" href={`/tags/${tag}/`}>
-									<span aria-hidden="true">#</span>
+								<a class="cactus-link inline-block before:content-['#']" href={`/tags/${tag}/`}>
 									<span class="sr-only">View all posts with the tag</span>
 									{tag}
 								</a>
 							</li>
 						))}
 					</ul>
-					<span class="mt-4 block sm:text-end">
+					<div class="mt-4">
 						<a class="hover:text-link" href="/tags/">
 							View all <span aria-hidden="true">→</span>
 							<span class="sr-only">blog tags</span>
 						</a>
-					</span>
+					</div>
 				</aside>
 			)
 		}
