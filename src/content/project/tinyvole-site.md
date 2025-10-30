@@ -5,6 +5,9 @@ publishDate: 2025-10-29
 tags: [Astro, Tailwind]
 url: https://tinyvole.com/
 repo: https://github.com/he2dou/tinyvole-astro
+coverImage:
+  src: "/tinyvole-app.jpg"
+  alt: "TinyVole App Preview"
 ---
 
 This is a sample project entry. Describe the goals, features, and interesting technical decisions here.

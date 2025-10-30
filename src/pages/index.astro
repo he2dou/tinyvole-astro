@@ -49,7 +49,7 @@ const latestProject = allProjects
 		<SocialList />
 	</section>
 	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Videos</h2>
+		<h2 class="title text-accent mb-4 text-xl">Videos</h2>
 		<ul class="flex flex-wrap items-start gap-12">
 			{
 				allVideos.slice(0, 2).map((video) => (
@@ -91,9 +91,12 @@ const latestProject = allProjects
 	{
 		latestProject.length > 0 && (
 			<section class="mt-16">
-				<h2 class="title text-accent mb-6 text-xl">
-					<a href="/projects/">Projects</a>
-				</h2>
+				<div class="mb-6 flex items-center justify-between">
+					<h2 class="title text-accent text-xl">Projects</h2>
+					<a class="hover:text-link" href="/projects/">
+						View all <span aria-hidden="true">→</span>
+					</a>
+				</div>
 				<ul class="space-y-8 text-start" role="list">
 					<li>
 						<ProjectCard project={latestProject[0]} />
@@ -103,7 +106,12 @@ const latestProject = allProjects
 		)
 	}
 	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
+		<div class="mb-6 flex items-center justify-between">
+			<h2 class="title text-accent text-xl">Posts</h2>
+			<a class="hover:text-link" href="/posts/">
+				View all <span aria-hidden="true">→</span>
+			</a>
+		</div>
 		<ul class="space-y-4" role="list">
 			{
 				combinedPosts.map((p) => (
@@ -117,9 +125,12 @@ const latestProject = allProjects
 	{
 		latestNotes.length > 0 && (
 			<section class="mt-16">
-				<h2 class="title text-accent mb-6 text-xl">
-					<a href="/notes/">Notes</a>
-				</h2>
+				<div class="mb-6 flex items-center justify-between">
+					<h2 class="title text-accent text-xl">Notes</h2>
+					<a class="hover:text-link" href="/notes/">
+						View all <span aria-hidden="true">→</span>
+					</a>
+				</div>
 				<ul class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
 					{latestNotes.map((note) => (
 						<li>

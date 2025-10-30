@@ -10,65 +10,77 @@ type Props = {
 const { project } = Astro.props as Props;
 ---
 
-<article class="bg-global-text/5 rounded-md p-4 transition">
+<article class="bg-global-text/5 gap-3 rounded-md p-4 transition flex items-center sm:items-start sm:gap-4">
 	{
 		project.data.coverImage && (
-			<div class="mb-3 overflow-hidden rounded-md">
-				<Image
-					alt={project.data.coverImage.alt}
-					layout="constrained"
-					width={512}
-					height={288}
-					src={project.data.coverImage.src}
+			<div class="aspect-square w-[clamp(96px,28vw,128px)] flex-shrink-0 overflow-hidden rounded-md sm:w-[clamp(112px,24vw,160px)] md:w-[clamp(128px,22vw,192px)] lg:w-[clamp(86px,15vw,128px)]">
+				{typeof project.data.coverImage.src === "string" ? (
+					<img
+						alt={project.data.coverImage.alt}
+						class="h-full w-full object-cover"
+						src={project.data.coverImage.src}
+					/>
+				) : (
+					<Image
+						alt={project.data.coverImage.alt}
+						layout="constrained"
+						width={512}
+						height={288}
+						src={project.data.coverImage.src}
+						class="h-full w-full object-cover"
+					/>
+				)}
+			</div>
+		)
+	}
+
+	<div class="mt-3 flex-1 sm:mt-0">
+		<a class="cactus-link block text-base font-semibold" href={`/projects/${project.id}/`}>
+			{project.data.title}
+		</a>
+		{
+			project.data.publishDate && (
+				<FormattedDate
+					class="mt-1 block text-gray-600 dark:text-gray-400"
+					date={project.data.publishDate}
 				/>
-			</div>
-		)
-	}
-	<a class="cactus-link block text-base font-semibold" href={`/projects/${project.id}/`}>
-		{project.data.title}
-	</a>
-	{
-		project.data.publishDate && (
-			<FormattedDate
-				class="mt-1 block text-gray-600 dark:text-gray-400"
-				date={project.data.publishDate}
-			/>
-		)
-	}
-	{
-		!!project.data.tags?.length && (
-			<div class="not-prose mt-2 flex flex-wrap gap-2">
-				{project.data.tags.map((tag) => (
-					<span class="bg-global-text/10 rounded-md px-2 py-0.5 text-xs">{tag}</span>
-				))}
-			</div>
-		)
-	}
-	<p class="mt-2 line-clamp-3 text-sm">{project.data.description}</p>
-	<div class="mt-3 space-x-3 text-sm">
-		{
-			project.data.url && (
-				<a
-					class="underline underline-offset-2"
-					href={project.data.url}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Visit
-				</a>
 			)
 		}
 		{
-			project.data.repo && (
-				<a
-					class="underline underline-offset-2"
-					href={project.data.repo}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Source
-				</a>
+			!!project.data.tags?.length && (
+				<div class="not-prose mt-2 flex flex-wrap gap-2">
+					{project.data.tags.map((tag) => (
+						<span class="bg-global-text/10 rounded-md px-2 py-0.5 text-xs">{tag}</span>
+					))}
+				</div>
 			)
 		}
+		<p class="mt-2 line-clamp-3 text-sm">{project.data.description}</p>
+		<div class="mt-3 space-x-3 text-sm">
+			{
+				project.data.url && (
+					<a
+						class="underline underline-offset-2"
+						href={project.data.url}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Visit
+					</a>
+				)
+			}
+			{
+				project.data.repo && (
+					<a
+						class="underline underline-offset-2"
+						href={project.data.repo}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Source
+					</a>
+				)
+			}
+		</div>
 	</div>
 </article>
