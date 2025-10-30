@@ -1,0 +1,36 @@
+---
+type Props = {
+  /** Accepts either a full YouTube URL or a video ID */
+  id: string;
+  class?: string;
+};
+
+const { id, class: className = "" } = Astro.props as Props;
+
+function extractYouTubeId(input: string): string | null {
+  try {
+    if (/^https?:\/\//i.test(input)) {
+      const url = new URL(input);
+      if (url.hostname.includes("youtu.be")) {
+        return url.pathname.split("/").filter(Boolean)[0] ?? null;
+      }
+      return url.searchParams.get("v");
+    }
+    return input;
+  } catch {
+    return null;
+  }
+}
+
+const videoId = extractYouTubeId(id);
+const thumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : undefined;
+const watchUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : id;
+---
+
+<a class={`block overflow-hidden rounded-xl ${className}`} href={watchUrl} target="_blank" rel="noopener noreferrer">
+  {thumbnail ? (
+    <img src={thumbnail} alt="YouTube video thumbnail" class="w-full h-auto" loading="lazy" />
+  ) : (
+    <span class="block bg-global-text/10 p-6 text-center">Video</span>
+  )}
+</a>
