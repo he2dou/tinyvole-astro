@@ -70,7 +70,6 @@ const paginationProps = {
 				!!uniqueNoteTags.length && (
 					<aside class="not-prose">
 						<h3 class="title mb-4 flex items-center gap-2 text-lg">
-							Tags
 							<svg
 								aria-hidden="true"
 								class="h-6 w-6"
@@ -87,6 +86,7 @@ const paginationProps = {
 								<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 								<path d="M6 9h-.01" />
 							</svg>
+							Tags
 						</h3>
 						<ul id="notes-filter" class="space-y-2" role="list">
 							{uniqueNoteTags.map((t) => (
