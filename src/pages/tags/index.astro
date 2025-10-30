@@ -12,24 +12,24 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-    <h1 class="title mb-6">Tags</h1>
-    <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
-        {
-            allTags.map(([tag, val]) => (
-                <li>
-                    <a
-                        class="group flex items-center justify-between rounded-md border border-global-text/10 bg-global-text/5 px-3 py-2 transition hover:bg-global-text/10 hover:shadow-sm"
-                        href={`/tags/${tag}/`}
-                        aria-label={`View ${val} post${val > 1 ? "s" : ""} with tag ${tag}`}
-                        title={`View posts with the tag: ${tag}`}
-                    >
-                        <span class="cactus-link inline-block before:content-['#']">{tag}</span>
-                        <span class="text-xs rounded-full bg-global-text/10 px-2 py-0.5 text-gray-600 dark:text-gray-400">
-                            {val}
-                        </span>
-                    </a>
-                </li>
-            ))
-        }
-    </ul>
+	<h1 class="title mb-6">Tags</h1>
+	<ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
+		{
+			allTags.map(([tag, val]) => (
+				<li>
+					<a
+						class="group bg-global-text/5 flex items-center justify-between rounded-md px-3 py-2 transition"
+						href={`/tags/${tag}/`}
+						aria-label={`View ${val} post${val > 1 ? "s" : ""} with tag ${tag}`}
+						title={`View posts with the tag: ${tag}`}
+					>
+						<span class="cactus-link inline-block before:content-['#']">{tag}</span>
+						<span class="bg-global-text/10 rounded-full px-2 py-0.5 text-xs text-gray-600 dark:text-gray-400">
+							{val}
+						</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
 </PageLayout>

@@ -4,52 +4,71 @@ import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
 
 type Props = {
-  project: CollectionEntry<"project">;
+	project: CollectionEntry<"project">;
 };
 
 const { project } = Astro.props as Props;
 ---
 
-<article class="bg-global-text/5 rounded-md p-4 transition hover:bg-global-text/10">
-  {
-    project.data.coverImage && (
-      <div class="mb-3 overflow-hidden rounded-md">
-        <Image
-          alt={project.data.coverImage.alt}
-          layout="constrained"
-          width={512}
-          height={288}
-          src={project.data.coverImage.src}
-        />
-      </div>
-    )
-  }
-  <a class="cactus-link text-base font-semibold block" href={`/projects/${project.id}/`}>
-    {project.data.title}
-  </a>
-  {project.data.publishDate && (
-    <FormattedDate class="text-gray-600 dark:text-gray-400 block mt-1" date={project.data.publishDate} />
-  )}
-  {
-    !!project.data.tags?.length && (
-      <div class="not-prose mt-2 flex flex-wrap gap-2">
-        {project.data.tags.map((tag) => (
-          <span class="bg-global-text/10 text-xs px-2 py-0.5 rounded-md">{tag}</span>
-        ))}
-      </div>
-    )
-  }
-  <p class="mt-2 text-sm line-clamp-3">{project.data.description}</p>
-  <div class="mt-3 text-sm space-x-3">
-    {project.data.url && (
-      <a class="underline underline-offset-2" href={project.data.url} target="_blank" rel="noopener noreferrer">
-        Visit
-      </a>
-    )}
-    {project.data.repo && (
-      <a class="underline underline-offset-2" href={project.data.repo} target="_blank" rel="noopener noreferrer">
-        Source
-      </a>
-    )}
-  </div>
+<article class="bg-global-text/5 rounded-md p-4 transition">
+	{
+		project.data.coverImage && (
+			<div class="mb-3 overflow-hidden rounded-md">
+				<Image
+					alt={project.data.coverImage.alt}
+					layout="constrained"
+					width={512}
+					height={288}
+					src={project.data.coverImage.src}
+				/>
+			</div>
+		)
+	}
+	<a class="cactus-link block text-base font-semibold" href={`/projects/${project.id}/`}>
+		{project.data.title}
+	</a>
+	{
+		project.data.publishDate && (
+			<FormattedDate
+				class="mt-1 block text-gray-600 dark:text-gray-400"
+				date={project.data.publishDate}
+			/>
+		)
+	}
+	{
+		!!project.data.tags?.length && (
+			<div class="not-prose mt-2 flex flex-wrap gap-2">
+				{project.data.tags.map((tag) => (
+					<span class="bg-global-text/10 rounded-md px-2 py-0.5 text-xs">{tag}</span>
+				))}
+			</div>
+		)
+	}
+	<p class="mt-2 line-clamp-3 text-sm">{project.data.description}</p>
+	<div class="mt-3 space-x-3 text-sm">
+		{
+			project.data.url && (
+				<a
+					class="underline underline-offset-2"
+					href={project.data.url}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Visit
+				</a>
+			)
+		}
+		{
+			project.data.repo && (
+				<a
+					class="underline underline-offset-2"
+					href={project.data.repo}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Source
+				</a>
+			)
+		}
+	</div>
 </article>

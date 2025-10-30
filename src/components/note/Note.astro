@@ -13,11 +13,8 @@ const { Content } = await render(note);
 ---
 
 <article
-    class:list={[
-        isPreview &&
-            "bg-global-text/5 inline-grid rounded-md px-4 py-3 transition hover:bg-global-text/10 hover:shadow-sm",
-    ]}
-    data-pagefind-body={isPreview ? false : true}
+	class:list={[isPreview && "bg-global-text/5 rounded-md px-4 py-3 transition"]}
+	data-pagefind-body={isPreview ? false : true}
 >
 	<Tag class="title" class:list={{ "text-base": isPreview }}>
 		{
@@ -40,21 +37,23 @@ const { Content } = await render(note);
 		}}
 		date={note.data.publishDate}
 	/>
-	{!!note.data.tags?.length && isPreview && (
-		<div class="not-prose mt-2 flex flex-wrap gap-2">
-			{note.data.tags.map((tag) => (
-				<span class="bg-global-text/10 text-xs px-2 py-0.5 rounded-md">{tag}</span>
-			))}
-		</div>
-	)}
+	{
+		!!note.data.tags?.length && isPreview && (
+			<div class="not-prose mt-2 flex flex-wrap gap-2">
+				{note.data.tags.map((tag) => (
+					<span class="bg-global-text/10 rounded-md px-2 py-0.5 text-xs">{tag}</span>
+				))}
+			</div>
+		)
+	}
 	{
 		isPreview ? (
 			note.data.description ? (
-				<p class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0 line-clamp-3">
+				<p class="prose prose-sm prose-cactus mt-4 line-clamp-3 max-w-none [&>p:last-of-type]:mb-0">
 					{note.data.description}
 				</p>
 			) : (
-				<div class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0 line-clamp-3">
+				<div class="prose prose-sm prose-cactus mt-4 line-clamp-3 max-w-none [&>p:last-of-type]:mb-0">
 					<Content />
 				</div>
 			)
