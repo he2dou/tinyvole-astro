@@ -4,11 +4,12 @@ import FormattedDate from "@/components/FormattedDate.astro";
 import type { HTMLTag, Polymorphic } from "astro/types";
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
-	post: CollectionEntry<"post">;
-	withDesc?: boolean;
+    post: CollectionEntry<"post">;
+    withDesc?: boolean;
+    showPinnedLabel?: boolean;
 };
 
-const { as: Tag = "div", post, withDesc = false } = Astro.props;
+const { as: Tag = "div", post, withDesc = false, showPinnedLabel = false } = Astro.props;
 ---
 
 <FormattedDate
@@ -16,9 +17,10 @@ const { as: Tag = "div", post, withDesc = false } = Astro.props;
 	date={post.data.publishDate}
 />
 <Tag>
-	{post.data.draft && <span class="text-red-500">(Draft) </span>}
-	<a class="cactus-link" href={`/posts/${post.id}/`}>
-		{post.data.title}
-	</a>
+    {post.data.draft && <span class="text-red-500">(Draft) </span>}
+    {showPinnedLabel && post.data.pinned && <span class="text-accent">(Pinned) </span>}
+    <a class="cactus-link" href={`/posts/${post.id}/`}>
+        {post.data.title}
+    </a>
 </Tag>
 {withDesc && <q class="line-clamp-3 italic">{post.data.description}</q>}
