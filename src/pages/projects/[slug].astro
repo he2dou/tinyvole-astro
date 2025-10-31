@@ -18,14 +18,16 @@ const { Content } = await render(project);
     {project.data.publishDate && (
       <FormattedDate class="text-gray-600 dark:text-gray-400" date={project.data.publishDate} />
     )}
-    <p class="mb-4">{project.data.description}</p>
-    <div class="not-prose mb-6 space-x-3">
-      {project.data.url && (
-        <a class="cactus-link" href={project.data.url} target="_blank" rel="noopener noreferrer">Visit</a>
-      )}
-      {project.data.repo && (
-        <a class="cactus-link" href={project.data.repo} target="_blank" rel="noopener noreferrer">Source</a>
-      )}
+    <div class="overflow-x-auto rounded border  p-4 mt-6">
+      <p class="m-0 text-sm sm:text-base">{project.data.description}</p>
+      <div class="not-prose mt-3 text-sm flex justify-end gap-3">
+        {project.data.url && (
+          <a class="underline underline-offset-2" href={project.data.url} target="_blank" rel="noopener noreferrer">Visit</a>
+        )}
+        {project.data.repo && (
+          <a class="underline underline-offset-2" href={project.data.repo} target="_blank" rel="noopener noreferrer">Source</a>
+        )}
+      </div>
     </div>
     <Content />
   </article>
