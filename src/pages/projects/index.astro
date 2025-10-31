@@ -5,6 +5,9 @@ import { Icon } from "astro-icon/components";
 import ProjectCard from "@/components/project/ProjectCard.astro";
 
 const allProjects = await getCollection("project");
+const totalCount = allProjects.length;
+const currentPage = 1;
+const totalPages = 1;
 const projectsByDate = allProjects.sort(
 	(a, b) => (b.data.publishDate?.getTime() ?? 0) - (a.data.publishDate?.getTime() ?? 0),
 );
@@ -19,12 +22,15 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-	<div class="mb-12 flex items-center gap-3">
+	<div class="mb-12 relative flex items-center gap-3">
 		<h2 class="title">Projects</h2>
 		<a class="text-accent" href="/projects/rss.xml" target="_blank">
 			<span class="sr-only">RSS feed</span>
 			<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
 		</a>
+		<div class="text-xs text-gray-600 dark:text-gray-400 tracking-tight">
+			Page {currentPage}/{totalPages} · Total {totalCount}
+		</div>
 	</div>
 	<div class="grid sm:grid-cols-[3fr_1fr] sm:gap-x-8 sm:gap-y-16">
 		<div>
