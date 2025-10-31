@@ -16,9 +16,11 @@ export const getStaticPaths = (async ({ paginate }) => {
 	const allPostsByDate = allPosts.sort(collectionDateSort);
 	const uniqueTags = getUniqueTags(allPosts).slice(0, MAX_TAGS);
 	const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PINNED_POSTS);
+	const totalCount = allPosts.length;
+	const totalPages = Math.ceil(totalCount / MAX_POSTS_PER_PAGE);
 	return paginate(allPostsByDate, {
 		pageSize: MAX_POSTS_PER_PAGE,
-		props: { uniqueTags, pinnedPosts },
+		props: { uniqueTags, pinnedPosts, totalCount, totalPages },
 	});
 }) satisfies GetStaticPaths;
 
@@ -26,9 +28,12 @@ interface Props {
 	page: Page<CollectionEntry<"post">>;
 	uniqueTags: string[];
 	pinnedPosts: CollectionEntry<"post">[];
+	totalCount: number;
+	totalPages: number;
 }
 
-const { page, uniqueTags, pinnedPosts } = Astro.props;
+const { page, uniqueTags, pinnedPosts, totalCount, totalPages } = Astro.props;
+const currentPage = Number(Astro.params.page ?? 1);
 
 const meta = {
 	description: "Read my collection of posts and the things that interest me",
@@ -55,13 +60,18 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
 <PageLayout meta={meta}>
-	<div class="mb-12 flex items-center gap-3">
-		<h2 class="title">Posts</h2>
-		<a class="text-accent" href="/rss.xml" target="_blank">
-			<span class="sr-only">RSS feed</span>
-			<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
-		</a>
-	</div>
+    <div class="mb-12 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <h2 class="title">Posts</h2>
+            <a class="text-accent" href="/rss.xml" target="_blank">
+                <span class="sr-only">RSS feed</span>
+                <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
+            </a>
+			<div class="text-xs text-gray-600 dark:text-gray-400 tracking-tight">
+            		Page {currentPage}/{totalPages} · Total {totalCount}
+        	</div>
+        </div>
+    </div>
 	<div class="grid sm:grid-cols-[3fr_1fr] sm:gap-x-8 sm:gap-y-16">
 		<div>
 			{
@@ -95,8 +105,8 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 					</section>
 				))
 			}
-			<Pagination {...paginationProps} />
-		</div>
+            <Pagination {...paginationProps} />
+        </div>
 		{
 			!!uniqueTags.length && (
 				<aside class="not-prose">
@@ -138,5 +148,6 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 				</aside>
 			)
 		}
+		
 	</div>
 </PageLayout>
