@@ -8,17 +8,25 @@ import type { GetStaticPaths, Page } from "astro";
 import { Icon } from "astro-icon/components";
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const MAX_NOTES_PER_PAGE = 10;
-	const allNotes = await getCollection("note");
-	return paginate(allNotes.sort(collectionDateSort), { pageSize: MAX_NOTES_PER_PAGE });
+    const MAX_NOTES_PER_PAGE = 10;
+    const allNotes = await getCollection("note");
+    const totalCount = allNotes.length;
+    const totalPages = Math.ceil(totalCount / MAX_NOTES_PER_PAGE);
+    return paginate(allNotes.sort(collectionDateSort), {
+        pageSize: MAX_NOTES_PER_PAGE,
+        props: { totalCount, totalPages },
+    });
 }) satisfies GetStaticPaths;
 
 interface Props {
-	page: Page<CollectionEntry<"note">>;
-	uniqueTags: string[];
+    page: Page<CollectionEntry<"note">>;
+    uniqueTags: string[];
+    totalCount: number;
+    totalPages: number;
 }
 
-const { page } = Astro.props;
+const { page, totalCount, totalPages } = Astro.props;
+const currentPage = Number(Astro.params.page ?? 1);
 const allNotes = await getCollection("note");
 const uniqueNoteTags = [
 	...new Set(allNotes.flatMap((n) => (n.data.tags ? [...n.data.tags] : []))),
@@ -46,13 +54,16 @@ const paginationProps = {
 ---
 
 <PageLayout meta={meta}>
-	<div class="mb-12 flex items-center gap-3">
-		<h2 class="title">Notes</h2>
-		<a class="text-accent" href="/notes/rss.xml" target="_blank">
-			<span class="sr-only">RSS feed</span>
-			<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
-		</a>
-	</div>
+    <div class="mb-12 relative flex items-center gap-3">
+        <h2 class="title">Notes</h2>
+        <a class="text-accent" href="/notes/rss.xml" target="_blank">
+            <span class="sr-only">RSS feed</span>
+            <Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
+        </a>
+        	<div class="text-xs text-gray-600 dark:text-gray-400 tracking-tight">
+            		Page {currentPage}/{totalPages} · Total {totalCount}
+        	</div>
+    </div>
 	<div class="grid sm:grid-cols-[3fr_1fr] sm:gap-x-8 sm:gap-y-16">
 		<div>
 			<ul id="notes-list" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-2" role="list">
