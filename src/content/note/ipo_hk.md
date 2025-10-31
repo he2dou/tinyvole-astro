@@ -1,8 +1,8 @@
 ---
 title: 港股打新提示词
-description: An introduction to using the note feature in Astro Cactus
+description: "这是一个港股打新提示词，用于指导港股打新分析师在分析过程中遵循最佳实践和用户体验原则。"
 publishDate: "2025-10-14T11:23:00Z"
-tags: [提示词]
+tags: [ai,prompt]
 ---
 
 

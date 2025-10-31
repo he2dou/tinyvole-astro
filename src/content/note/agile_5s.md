@@ -1,8 +1,8 @@
 ---
 title: 敏捷开发5S个人规则
-description: An introduction to using the note feature in Astro Cactus
+description: "这是一个敏捷开发5S个人规则，用于指导敏捷开发团队在项目开发过程中遵循最佳实践和用户体验原则。"
 publishDate: "2024-10-14T11:23:00Z"
-tags: [提示词]
+tags: [ai,prompt]
 ogImage: "/social-card.png"
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: 6A工作流执行规则
-description: An introduction to using the note feature in Astro Cactus
-publishDate: "2024-10-14T11:23:00Z"
-tags: [提示词]
+description: "这是一个6A工作流执行规则，用于指导6A工作流在项目开发过程中遵循最佳实践和用户体验原则。"
+publishDate: "2025-10-14T11:23:00Z"
+tags: [ai,prompt]
 
 ---
 # 身份定义
